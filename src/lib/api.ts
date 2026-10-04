@@ -44,3 +44,21 @@ export async function deleteDocument(documentId: number) {
 
     return response.json();
 }
+
+export async function askDocument(
+  documentId: number,
+  question: string
+) {
+  const response = await fetch(
+    `${API_URL}/documents/${documentId}/ask?q=${encodeURIComponent(question)}`
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(
+      error.detail || "Failed to get an answer"
+    );
+  }
+
+  return response.json();
+}
